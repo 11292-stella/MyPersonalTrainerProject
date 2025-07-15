@@ -44,7 +44,7 @@ public class MuscoloController {
     @GetMapping("")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER') ")
     public Page<Muscolo> getAllMuscolo(@RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "10") int size,
+                                       @RequestParam(defaultValue = "28") int size,
                                        @RequestParam(defaultValue = "id") String sortBy){
         return  muscoloService.getAllMuscolo(page,size,sortBy);
     }

@@ -24,10 +24,10 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    // Inject ApplicationContext to get beans directly when needed
+
     private final ApplicationContext applicationContext;
 
-    // Use constructor injection for ApplicationContext
+
     public SecurityConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
@@ -37,16 +37,17 @@ public class SecurityConfig {
         httpSecurity.formLogin(http -> http.disable());
         httpSecurity.csrf(http -> http.disable());
         httpSecurity.sessionManagement(http -> http.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        httpSecurity.cors(Customizer.withDefaults());
+        httpSecurity.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 
-        // Get JwtFilter bean directly from ApplicationContext
+
+
         JwtFilter jwtFilter = applicationContext.getBean(JwtFilter.class);
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         httpSecurity.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/users").permitAll() // Example: if you have a user creation endpoint
-                .requestMatchers("/your_public_endpoint/**").permitAll() // Placeholder for other public endpoints
+                .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                .requestMatchers("/muscoli").permitAll()
                 .anyRequest().authenticated()
         );
 
@@ -61,7 +62,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("*"));
+        corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
         corsConfiguration.setAllowedMethods(List.of("*"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowCredentials(true);

@@ -52,12 +52,15 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        // Solo se tutto va bene, proseguiamo con il filtro
+
         filterChain.doFilter(request, response);
     }
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return new AntPathMatcher().match("/auth/**", request.getServletPath());
+        String path = request.getServletPath();
+        String method = request.getMethod();
+
+        return new AntPathMatcher().match("/auth/**", path) || "OPTIONS".equalsIgnoreCase(method);
     }
 }

@@ -55,7 +55,10 @@ public class JwtTool {
             throw new NotFoundException("Invalid user ID in token.");
         }
 
+        System.out.println("User ID decodificato dal token (subject): " + subject);
         int id = Integer.parseInt(subject);
-        return userService.getUser(id);
+        User utente = userService.getUser(id);
+        System.out.println("Utente recuperato dal DB: " + utente);
+        return utente;
     }
 }

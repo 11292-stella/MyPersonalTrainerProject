@@ -10,4 +10,6 @@ public interface MuscoloRepository extends JpaRepository<Muscolo,Integer> {
 
 
     List<Muscolo> findByNomeContainingIgnoreCase(String nome);
+
+    Muscolo findByNome(String muscolo);
 }
