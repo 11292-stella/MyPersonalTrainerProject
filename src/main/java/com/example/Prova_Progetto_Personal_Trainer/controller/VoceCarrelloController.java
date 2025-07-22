@@ -29,7 +29,7 @@ public class VoceCarrelloController {
     @PostMapping("")
     @PreAuthorize("hasAuthority('USER')")
     public VoceCarrello saveVoceCarrello(@RequestBody @Validated VoceCarrelloDto voceCarrelloDto,
-                                     BindingResult bindingResult,
+                                         BindingResult bindingResult,
                                          @AuthenticationPrincipal User authenticatedUser) throws ValidationException, NotFoundException {
 
         if (bindingResult.hasErrors()) {
@@ -37,6 +37,7 @@ public class VoceCarrelloController {
                     .map(objectError -> objectError.getDefaultMessage())
                     .reduce("", (e, s) -> e + s + "; ").trim());
         }
+        // Il servizio restituisce l'oggetto VoceCarrello salvato, che ha l'ID
         return voceCarrelloService.saveVoceCarrello(voceCarrelloDto, authenticatedUser);
     }
 
@@ -69,14 +70,14 @@ public class VoceCarrelloController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public void deleteVoceCarrello(@PathVariable int id) throws NotFoundException {
-        voceCarrelloService.deleteVoceCarrello(id);
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    public void deleteVoceCarrello(@PathVariable int id, @AuthenticationPrincipal User authenticatedUser) throws NotFoundException {
+        voceCarrelloService.deleteVoceCarrello(id, authenticatedUser);
     }
 
 
 
-    @GetMapping("/mio-carrello")
+    @GetMapping("/utente")
     @PreAuthorize("hasAuthority('USER')")
     public List<VoceCarrelloResponseDto> getMioCarrello(@AuthenticationPrincipal User authenticatedUser) {
         return voceCarrelloService.getCarrelloPerUtente(authenticatedUser);

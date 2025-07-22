@@ -12,13 +12,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
 
-@RestControllerAdvice  // gestisce le eccezioni è un controller per errori
+@RestControllerAdvice
 public class CustomizeExceptionHendler {
 
-    @ExceptionHandler(NotFoundException.class)//serve per mappare il metodo
-    //che gestisce questa eccezione
-    //quando in Spring si genera una eccezione di tipo NotFoundException
-    //spring passerà l'oonere della risposta al client a questo metodo
+    @ExceptionHandler(NotFoundException.class)
+
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiError notFoundExceptionHandler(NotFoundException e){
 
@@ -29,10 +27,8 @@ public class CustomizeExceptionHendler {
 
     }
 
-    @ExceptionHandler(ValidationException.class)//serve per mappare il metodo
-    //che gestisce questa eccezione
-    //quando in Spring si genera una eccezione di tipo NotFoundException
-    //spring passerà l'oonere della risposta al client a questo metodo
+    @ExceptionHandler(ValidationException.class)
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiError ValidationExceptionHandler(ValidationException e){
 

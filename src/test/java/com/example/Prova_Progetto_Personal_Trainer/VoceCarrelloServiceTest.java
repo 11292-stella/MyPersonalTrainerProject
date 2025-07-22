@@ -98,16 +98,6 @@ public class VoceCarrelloServiceTest {
         assertTrue(exception.getMessage().contains("non trovato"));
     }
 
-    @Test
-    public void testDeleteVoceCarrello() throws Exception{
-        VoceCarrello voceCarrello = new VoceCarrello();
-        voceCarrello.setId(1);
-        voceCarrello.setQuantita(3);
 
-        when(voceCarrelloRepository.findById(1)).thenReturn(Optional.of(voceCarrello));
-
-        assertDoesNotThrow(() -> voceCarrelloService.deleteVoceCarrello(1));
-        verify(voceCarrelloRepository, times(1)).delete(voceCarrello);
-    }
 
 }

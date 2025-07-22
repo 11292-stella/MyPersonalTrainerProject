@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProdottoRepository extends JpaRepository<Prodotto,Integer> {
-    List<Muscolo> findByNomeContainingIgnoreCase(String nome);
+    List<Prodotto> findByNomeContainingIgnoreCase(String nome);
+    List<Prodotto> findByPrezzoBetween(int min, int max);
 }

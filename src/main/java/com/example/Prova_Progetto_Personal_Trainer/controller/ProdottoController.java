@@ -38,7 +38,7 @@ public class ProdottoController {
     @GetMapping("")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public Page<Prodotto> getAllProdotti(@RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "10") int size,
+                                         @RequestParam(defaultValue = "23") int size,
                                          @RequestParam(defaultValue = "id") String sortBy) {
         return prodottoService.getAllProdotti(page, size, sortBy);
     }
